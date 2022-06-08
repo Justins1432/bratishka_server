@@ -50,6 +50,25 @@ create table barbers(
     foreign key (branch_id) references branches (id) on delete cascade on update cascade
 );
 
+create table barber_schedule (
+    id integer primary key,
+    monday_start time not null,
+    monday_end time not null,
+    tuesday_start time not null,
+    tuesday_end time not null,
+    wednesday_start time not null,
+    wednesday_end time not null,
+    thursday_start time not null,
+    thursday_end time not null,
+    friday_start time not null,
+    friday_end time not null,
+    saturday_start time not null,
+    saturday_end time not null,
+    sunday_start time not null,
+    sunday_end time not null,
+    foreign key (id) references barbers (id) on update cascade on delete cascade
+);
+
 create table types_product(
     id integer primary key AUTO_INCREMENT,
     type varchar(10) not null
@@ -65,20 +84,6 @@ create table products(
     image varchar(255) not null,
     icon varchar(255) not null,
     foreign key (type_id) references types_product (id) on delete cascade on update cascade
-);
-
-create table free_times(
-    id integer primary key AUTO_INCREMENT,
-    day date not null,
-    time_s time not null
-);
-
-create table branch_free_times_list(
-    id integer primary key AUTO_INCREMENT,
-    branch_id integer not null,
-    free_time_id integer not null,
-    foreign key (branch_id) references branches (id) on delete cascade on update cascade,
-    foreign key (free_time_id) references free_times (id) on delete cascade on update cascade
 );
 
 create table basket(

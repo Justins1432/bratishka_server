@@ -28,6 +28,8 @@ if (isset($email) && isset($code) && isset($password)){
         http_response_code(400);
     }
 
+
+
 } else {
     echo '{ "status": "error", "message": "Not Found!" }';
     http_response_code(400);
