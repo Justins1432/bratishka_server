@@ -1,6 +1,5 @@
 <?php
 include "header.php";
-
 $mysqli = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
 if ($mysqli->connect_errno) {
     echo '[]';
@@ -9,22 +8,21 @@ if ($mysqli->connect_errno) {
 }
 $mysqli->set_charset("utf8");
 
-$branch_id = $_GET['branch_id'];
+$email = $_GET['email'];
 
-if (isset($branch_id)) {
+if (isset($email)){
     $res = $mysqli->query(
-        "SELECT barbers.id, position, b_name, rating, image, barbers.branch_id FROM barbers LEFT JOIN positions ON barbers.position_id = positions.id WHERE branch_id =" . $branch_id);
+        "SELECT surname, name, fathername, date_birth, city, email, number_phone FROM users WHERE email='$email'");
     $res->data_seek(0);
     $rows = array();
-    while ($row = $res->fetch_assoc()){
+    while ($row = $res->fetch_assoc()) {
         $rows[] = $row;
     }
     if (count($rows) > 0)
         print json_encode($rows, JSON_UNESCAPED_UNICODE);
     else
-        echo '[]';
-
+        echo 'No data user';
 } else {
-    echo '{ "status": "error", "message": "Failed to get record" }';
+    echo '{ "status": "error", "message" : "Failed to search record" }';
     http_response_code(400);
 }
